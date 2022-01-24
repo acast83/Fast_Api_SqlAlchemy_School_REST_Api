@@ -43,7 +43,7 @@ def query_students_by_name(student_name:str=Path(None,description="Please enter 
 
 # add new student
 @app.post("/api/students/")
-def create_st(user:StudentApiModel):
+def create_student(user:StudentApiModel):
     new_student =Student_Db_Model(  first_name=user.first_name,
                                     last_name=user.last_name,
                                     email = user.email,
