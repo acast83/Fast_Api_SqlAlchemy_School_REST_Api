@@ -1,4 +1,4 @@
-# Fast Api SqlAlchemy School REST Api
+# Fast Api sqlalchemy School REST Api
 This is my first Python REST Api project. I used Fast Api framework and sqlalchemy library as ORM. School Api is live on Heroku: https://fast-api-school.herokuapp.com/
 
 ## Testing and documentation
