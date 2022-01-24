@@ -28,6 +28,18 @@ def query_students():
                                     "gender: ":student.gender
                                     }
     return dict_students
+# fetch list of students with specific name
+@app.get("/api/students/{student_name}")
+def query_students_by_name(student_name:str):
+    students = session.query(Student_Db_Model).filter(Student_Db_Model.first_name==student_name)
+    dict_students = {}
+    for student in students:
+        dict_students[student.id]={ "first name:":student.first_name,
+                                    "last name: ":student.last_name,
+                                    "email: ": student.email,
+                                    "gender: ":student.gender
+                                    }
+    return dict_students
 
 # add new student
 @app.post("/api/students/")
@@ -39,6 +51,7 @@ def create_st(user:StudentApiModel):
                                     )
     session.add(new_student)
     session.commit()
+    return {"Message":"You successfully created a new student"}
 
 # delete student
 @app.delete("/api/students/{student_id}")
@@ -80,3 +93,4 @@ def update_student(student_id:int, user:UpdateStudent):
         return {"Message":"Student's data was successfully modified"}
     else:
         return {"Error":"Student with id you entered doesn't exist in our database"}
+
