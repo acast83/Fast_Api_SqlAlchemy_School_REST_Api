@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,Path
 from db_model import Student_Db_Model,engine
 from sqlalchemy.orm import sessionmaker
 from schemas import StudentApiModel, UpdateStudent
@@ -30,7 +30,7 @@ def query_students():
     return dict_students
 # fetch list of students with specific name
 @app.get("/api/students/{student_name}")
-def query_students_by_name(student_name:str):
+def query_students_by_name(student_name:str=Path(None,description="Please enter student's name")):
     students = session.query(Student_Db_Model).filter(Student_Db_Model.first_name==student_name)
     dict_students = {}
     for student in students:
@@ -55,7 +55,7 @@ def create_st(user:StudentApiModel):
 
 # delete student
 @app.delete("/api/students/{student_id}")
-def delete_student_by_id(student_id:int):
+def delete_student_by_id(student_id:int=Path(None,description="Please enter student's name")):
         try:
             student = session.query(Student_Db_Model).filter(Student_Db_Model.id==student_id).first()
             session.delete(student)
