@@ -11,6 +11,7 @@ session = Session()
 # 01 create fastapi object
 app = FastAPI()
 
+
 # root endpoint
 @app.get("/")
 def root():
@@ -29,6 +30,7 @@ def query_students():
             "email: ": student.email,
             "gender: ": student.gender,
         }
+    session.close()
     return dict_students
 
 
@@ -48,6 +50,7 @@ def query_students_by_name(
             "email: ": student.email,
             "gender: ": student.gender,
         }
+    session.close()
     return dict_students
 
 
@@ -62,6 +65,7 @@ def create_student(user: StudentApiModel):
     )
     session.add(new_student)
     session.commit()
+    session.close()
     return {"Message": "You successfully created a new student"}
 
 
@@ -78,8 +82,11 @@ def delete_student_by_id(
         )
         session.delete(student)
         session.commit()
+        session.close()
         return {"Message": "Student removed successfully "}
     except:
+        session.rollback()
+        session.close()
         return {"Error": "Student with id you entered doesn't exist in our database"}
 
 
@@ -129,6 +136,9 @@ def update_student(student_id: int, user: UpdateStudent):
             )
             student.gender = user.gender
             session.commit()
+            session.close()
         return {"Message": "Student's data was successfully modified"}
     else:
+        session.rollback()
+        session.close()
         return {"Error": "Student with id you entered doesn't exist in our database"}
