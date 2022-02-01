@@ -1,0 +1,72 @@
+2022-02-01 12:39:55,221:1643715595.221731:INFO:List of all students is fetched
+2022-02-01 12:53:44,481:1643716424.481461:INFO:New student Student_Db_Model.first_name Student_Db_Model.last_name is successfully added to our database
+2022-02-01 12:55:49,659:1643716549.659704:INFO:New student Danica Maksimovic is successfully added to our database
+2022-02-01 12:57:08,524:1643716628.524149:INFO:New student Danica Maksimovic is successfully added to our database
+2022-02-01 14:02:26,557:1643720546.557283:INFO:Student 9 data was successfully modified
+2022-02-01 14:03:02,159:1643720582.159251:INFO:Student 9 data was successfully modified
+2022-02-01 15:22:33,928:1643725353.928844:DEBUG:Student with id 12 doesn't exist in our database
+2022-02-01 15:26:35,226:1643725595.226446:INFO:Student with id 9 data was successfully modified
+2022-02-01 15:26:52,675:1643725612.675947:INFO:List of all students is fetched from the database
+2022-02-01 15:27:34,619:1643725654.619998:INFO:Student with id 9 data was successfully modified
+2022-02-01 15:29:42,179:1643725782.179378:INFO:Student with id 9 data was successfully modified
+2022-02-01 15:34:11,257:1643726051.257278:INFO:List of all students is fetched from the database
+2022-02-01 15:42:39,702:1643726559.702888:INFO:List of all students is fetched from the database
+2022-02-01 15:43:03,252:1643726583.252033:INFO:New student, stringstringstringstringstringstringstringstringstringstringstringstringstringstringstringstring string is successfully added to our database
+2022-02-01 15:56:07,190:1643727367.190647:INFO:List of all students is fetched from the database
+2022-02-01 15:56:46,549:1643727406.549478:INFO:Student with id 1 data was successfully modified
+2022-02-01 15:56:53,565:1643727413.565039:INFO:Student with id 1 data was successfully modified
+2022-02-01 15:57:30,117:1643727450.117298:INFO:List of all students is fetched from the database
+2022-02-01 15:58:57,363:1643727537.363579:INFO:Student with id 9 data was successfully modified
+2022-02-01 16:23:39,333:1643729019.333866:INFO:List of all students is fetched from the database
+2022-02-01 16:24:27,682:1643729067.682363:DEBUG:Characters @ or . missing in your entry
+2022-02-01 16:24:51,825:1643729091.825064:DEBUG:Characters @ or . missing in your entry
+2022-02-01 16:25:33,645:1643729133.645049:INFO:Student with id 9 data was successfully modified
+2022-02-01 16:25:41,171:1643729141.171889:INFO:List of all students is fetched from the database
+2022-02-01 16:26:11,975:1643729171.975469:INFO:Student with id 9 data was successfully modified
+2022-02-01 16:26:19,613:1643729179.613434:INFO:List of all students is fetched from the database
+2022-02-01 16:26:40,507:1643729200.507717:INFO:Student with id 9 data was successfully modified
+2022-02-01 16:26:47,795:1643729207.795991:INFO:List of all students is fetched from the database
+2022-02-01 16:27:03,951:1643729223.951390:INFO:Student with id 9 data was successfully modified
+2022-02-01 16:39:24,601:1643729964.601966:INFO:Student with id 9 data was successfully modified
+2022-02-01 16:39:31,331:1643729971.331301:INFO:List of all students is fetched from the database
+2022-02-01 18:37:54,161:1643737074.161125:INFO:List of all students is fetched from the database
+2022-02-01 18:38:16,532:1643737096.532537:INFO:List of students with first name Aleksandar is fetched fom the database
+2022-02-01 18:39:18,579:1643737158.579088:INFO:New student, Radmila Vuksanovic is successfully added to our database
+2022-02-01 18:39:38,988:1643737178.988221:DEBUG:Student with id 11 doesn't exist in our database, error Class 'builtins.NoneType' is not mapped
+2022-02-01 18:39:51,632:1643737191.632278:INFO:Student removed successfully 
+2022-02-01 18:40:03,675:1643737203.675510:INFO:New student, Radmila Vuksanovic is successfully added to our database
+2022-02-01 18:40:34,201:1643737234.201245:INFO:Student with id 9 data was successfully modified
+2022-02-01 18:40:44,408:1643737244.408918:INFO:List of all students is fetched from the database
+2022-02-01 18:41:55,927:1643737315.927330:DEBUG:Student with id 11 doesn't exist in our database
+2022-02-01 18:46:41,787:1643737601.787969:INFO:List of all students is fetched from the database
+2022-02-01 18:49:46,957:1643737786.957554:INFO:Student with id 9 data was successfully modified
+2022-02-01 18:49:56,962:1643737796.962319:DEBUG:Student with id 11 doesn't exist in our database
+2022-02-01 18:55:26,638:1643738126.638449:DEBUG:Student with id 11 doesn't exist in our database
+2022-02-01 18:55:33,830:1643738133.830141:INFO:Student with id 9 data was successfully modified
+2022-02-01 18:55:58,362:1643738158.362544:INFO:List of all students is fetched from the database
+2022-02-01 18:56:16,304:1643738176.304709:INFO:Student with id 9 data was successfully modified
+2022-02-01 18:56:19,565:1643738179.565669:INFO:List of all students is fetched from the database
+2022-02-01 18:57:23,878:1643738243.878082:INFO:Student with id 9 data was successfully modified
+2022-02-01 18:57:43,169:1643738263.169992:INFO:List of all students is fetched from the database
+2022-02-01 19:01:25,461:1643738485.461092:INFO:List of all students is fetched from the database
+2022-02-01 19:06:11,626:1643738771.626604:INFO:List of all students is fetched from the database
+2022-02-01 19:06:49,791:1643738809.791951:INFO:Student with id 9 data was successfully modified
+2022-02-01 19:06:55,837:1643738815.837794:INFO:List of all students is fetched from the database
+2022-02-01 19:15:16,091:1643739316.091584:INFO:Student removed successfully 
+2022-02-01 19:15:36,911:1643739336.911718:INFO:List of all students is fetched from the database
+2022-02-01 19:20:37,438:1643739637.438550:INFO:List of all students is fetched from the database
+2022-02-01 19:23:06,123:1643739786.123721:DEBUG:Student with id 9 doesn't exist in our database
+2022-02-01 19:23:14,444:1643739794.444940:INFO:Student with id 10 data was successfully modified
+2022-02-01 19:23:28,581:1643739808.581350:INFO:List of all students is fetched from the database
+2022-02-01 19:26:22,369:1643739982.369663:INFO:List of students with first name 10 is fetched fom the database
+2022-02-01 19:26:29,626:1643739989.626116:INFO:List of students with first name 1 is fetched fom the database
+2022-02-01 19:29:03,362:1643740143.362887:INFO:List of all students is fetched from the database
+2022-02-01 19:29:10,439:1643740150.439891:INFO:New student, Marko Nikolic is successfully added to our database
+2022-02-01 19:29:22,481:1643740162.481357:INFO:List of all students is fetched from the database
+2022-02-01 19:29:49,454:1643740189.454515:INFO:Student with id 11 data was successfully modified
+2022-02-01 20:57:03,468:1643745423.468995:INFO:List of all students is fetched from the database
+2022-02-01 20:58:16,457:1643745496.457920:INFO:Student with id 11 data was successfully modified
+2022-02-01 20:58:23,465:1643745503.465897:INFO:List of all students is fetched from the database
+2022-02-01 21:00:24,874:1643745624.874671:INFO:Student with id 11 data was successfully modified
+2022-02-01 21:01:56,432:1643745716.432950:INFO:List of all students is fetched from the database
+2022-02-01 21:02:32,231:1643745752.231244:INFO:Student with id 10 data was successfully modified

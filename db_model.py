@@ -14,11 +14,15 @@ Base = declarative_base()
 class Student_Db_Model(Base):
     __tablename__ = "students"
     id = Column(Integer, primary_key=True)
-    first_name = Column(String)
-    last_name = Column(String)
-    email = Column(String)
-    gender = Column(String)
+    first_name = Column(String(25), nullable=False)
+    last_name = Column(String(25), nullable=False)
+    email = Column(String(50), nullable=True)
+    gender = Column(String, nullable=False)
+    # If SQLite is used, limits will not matter because SQLite doesn't enforce column length or other limits
 
 
 def create_database():
     Base.metadata.create_all(engine)
+
+
+create_database()
