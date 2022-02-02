@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Path, status, HTTPException
 from db_model import Student_Db_Model, engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import func
 from schemas import StudentApiModel, UpdateStudent
 import logging
 import re
@@ -62,7 +63,7 @@ def query_students_by_name(
         try:
 
             students = session.query(Student_Db_Model).filter(
-                Student_Db_Model.first_name == student_name
+                func.lower(Student_Db_Model.first_name) == func.lower(student_name)
             )
             dict_students = {}
             for student in students:
@@ -172,7 +173,7 @@ def delete_student_by_id(
 
     except Exception as e:
         logger.debug(
-            f"Student with id {student_id} doesn't exist in our database, error {e}"
+            f"Student with id {student_id} doesn't exist in our database, error {str(e)}"
         )
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

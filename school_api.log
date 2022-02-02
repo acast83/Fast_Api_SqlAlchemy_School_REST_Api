@@ -100,3 +100,4 @@
 2022-02-02 23:46:32,975:1643841992.975830:INFO:List of all students is fetched from the database
 2022-02-02 23:47:55,569:1643842075.569352:INFO:Student with id 12 data was successfully modified
 2022-02-02 23:48:01,465:1643842081.465006:INFO:List of all students is fetched from the database
+2022-02-03 00:10:52,647:1643843452.647697:INFO:List of students with first name aleksandar is fetched fom the database
