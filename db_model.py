@@ -18,7 +18,8 @@ class Student_Db_Model(Base):
     last_name = Column(String(25), nullable=False)
     email = Column(String(50), nullable=True)
     gender = Column(String, nullable=False)
-    # If SQLite is used, limits will not matter because SQLite doesn't enforce column length or other limits
+    # SQLite doesn't enforce column length or other limits
+    # For that purpose limits are enforced through user input validation in each function
 
 
 def create_database():

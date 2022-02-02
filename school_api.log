@@ -70,3 +70,33 @@
 2022-02-01 21:00:24,874:1643745624.874671:INFO:Student with id 11 data was successfully modified
 2022-02-01 21:01:56,432:1643745716.432950:INFO:List of all students is fetched from the database
 2022-02-01 21:02:32,231:1643745752.231244:INFO:Student with id 10 data was successfully modified
+2022-02-02 15:32:25,048:1643812345.048985:INFO:List of students with first name Aleksandar is fetched fom the database
+2022-02-02 15:32:33,409:1643812353.409789:DEBUG:Error, invalid first name input (Aleksandar')
+2022-02-02 16:18:21,116:1643815101.116243:DEBUG:Error, invalid first name input (";;')
+2022-02-02 16:18:42,725:1643815122.725365:DEBUG:Error, invalid first name input ';[Ac, please use only alphabetic values
+2022-02-02 16:20:01,961:1643815201.961570:DEBUG:Error, invalid last name input '';, please use only alphabetic values
+2022-02-02 16:20:20,840:1643815220.840475:DEBUG:Error, invalid email format
+2022-02-02 17:54:15,075:1643820855.075902:DEBUG:Error, invalid first name input stringstringstringstringstringstringstringstring, please use only alphabetic values
+2022-02-02 17:55:54,655:1643820954.655704:DEBUG:Error, invalid first name input stringstringstringstringstringstringstringstring, please use only alphabetic values, character number between 1 and 25
+2022-02-02 18:22:52,380:1643822572.380108:DEBUG:Error, invalid first name input (A')
+2022-02-02 18:25:17,741:1643822717.741123:DEBUG:Error, invalid first name input (A')
+2022-02-02 18:46:23,888:1643823983.888038:DEBUG:Error, invalid first name input stringstringstringstringstringstringstringstring, please use only alphabetic values, character number between 1 and 25
+2022-02-02 18:47:12,553:1643824032.553659:DEBUG:Error, invalid first name input stringstringstringstringstringstringstringstring, please use only alphabetic values, character number between 1 and 25
+2022-02-02 18:48:16,274:1643824096.274827:DEBUG:Error, invalid last name input string], please use only alphabetic values, character number between 1 and 25
+2022-02-02 19:09:40,192:1643825380.192368:DEBUG:Student with id 16 doesn't exist in our database, error Class 'builtins.NoneType' is not mapped
+2022-02-02 19:22:29,025:1643826149.025515:DEBUG:Student with id 18 doesn't exist in our database
+2022-02-02 23:40:28,359:1643841628.359710:INFO:New student, Dusanka Stojadinovic is successfully added to our database
+2022-02-02 23:40:49,563:1643841649.563669:DEBUG:Error, invalid first name input Dusanka., please use only alphabetic values, character number between 1 and 25
+2022-02-02 23:42:01,890:1643841721.890043:DEBUG:Error, invalid email format
+2022-02-02 23:42:21,833:1643841741.833924:INFO:List of students with first name Dusanka is fetched fom the database
+2022-02-02 23:42:27,377:1643841747.377239:DEBUG:Error, invalid first name input (Dusanka1)
+2022-02-02 23:42:37,008:1643841757.008919:INFO:List of students with first name Dusank is fetched fom the database
+2022-02-02 23:44:10,248:1643841850.248889:DEBUG:Student with id 20 doesn't exist in our database, error Class 'builtins.NoneType' is not mapped
+2022-02-02 23:44:23,971:1643841863.971842:INFO:List of all students is fetched from the database
+2022-02-02 23:45:09,852:1643841909.852170:DEBUG:Invalid email format (string2)
+2022-02-02 23:45:23,601:1643841923.601415:DEBUG:Error, invalid last name input strin2g, please use only alphabetic characters
+2022-02-02 23:45:39,002:1643841939.002109:DEBUG:Error, invalid first name input string2, please use only alphabetic characters
+2022-02-02 23:46:25,088:1643841985.088189:INFO:Student with id 12 data was successfully modified
+2022-02-02 23:46:32,975:1643841992.975830:INFO:List of all students is fetched from the database
+2022-02-02 23:47:55,569:1643842075.569352:INFO:Student with id 12 data was successfully modified
+2022-02-02 23:48:01,465:1643842081.465006:INFO:List of all students is fetched from the database

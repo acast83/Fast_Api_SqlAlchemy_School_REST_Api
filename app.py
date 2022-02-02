@@ -1,8 +1,11 @@
-from fastapi import FastAPI, Path
+from fastapi import FastAPI, Path, status, HTTPException
 from db_model import Student_Db_Model, engine
 from sqlalchemy.orm import sessionmaker
 from schemas import StudentApiModel, UpdateStudent
 import logging
+import re
+
+reg_email_validation = "^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$"
 
 # setting up a logger
 logger = logging.getLogger(__name__)
@@ -55,51 +58,100 @@ def query_students():
 def query_students_by_name(
     student_name: str = Path(None, description="Please enter student's name")
 ):
-    try:
+    if student_name.isalpha():
+        try:
 
-        students = session.query(Student_Db_Model).filter(
-            Student_Db_Model.first_name == student_name
-        )
-        dict_students = {}
-        for student in students:
-            dict_students[student.id] = {
-                "first name:": student.first_name,
-                "last name: ": student.last_name,
-                "email: ": student.email,
-                "gender: ": student.gender,
-            }
+            students = session.query(Student_Db_Model).filter(
+                Student_Db_Model.first_name == student_name
+            )
+            dict_students = {}
+            for student in students:
+                dict_students[student.id] = {
+                    "first name:": student.first_name,
+                    "last name: ": student.last_name,
+                    "email: ": student.email,
+                    "gender: ": student.gender,
+                }
 
-        logger.info(
-            f"List of students with first name {student_name} is fetched fom the database"
+            logger.info(
+                f"List of students with first name {student_name} is fetched fom the database"
+            )
+            return dict_students
+
+        except Exception as e:
+            logger.debug(str(e))
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Error, ({str(e)})",
+            )
+
+        finally:
+            session.close()
+    else:
+        logger.debug(f"Error, invalid first name input ({student_name})")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Error, invalid first name input {student_name}, please use only alphabetic values, character number between 1 and 25",
         )
-        return dict_students
-    except Exception as e:
-        logger.debug(str(e))
-    finally:
-        session.close()
 
 
 # add new student
 @app.post("/api/students")
 def create_student(user: StudentApiModel):
-    try:
-        new_student = Student_Db_Model(
-            first_name=user.first_name,
-            last_name=user.last_name,
-            email=user.email,
-            gender=user.gender,
+
+    # input validation
+    if user.first_name.isalpha() and 1 <= len(user.first_name) <= 25:
+        if user.last_name.isalpha() and 1 <= len(user.last_name) <= 25:
+            if re.fullmatch(reg_email_validation, user.email):
+
+                try:
+                    new_student = Student_Db_Model(
+                        first_name=user.first_name,
+                        last_name=user.last_name,
+                        email=user.email,
+                        gender=user.gender,
+                    )
+                    session.add(new_student)
+                    session.commit()
+                    logger.info(
+                        f"New student, {user.first_name} {user.last_name} is successfully added to our database"
+                    )
+                    return {
+                        "Message": f"New student, {user.first_name} {user.last_name} is successfully added to our database"
+                    }
+                except Exception as e:
+                    logger.debug(str(e))
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail=f"Error, {str(e)}",
+                    )
+                finally:
+                    session.close()
+
+            else:
+                logger.debug(f"Error, invalid email format")
+                raise HTTPException(
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    detail=f"Invalid email format",
+                )
+
+        else:
+            logger.debug(
+                f"Error, invalid last name input {user.last_name}, please use only alphabetic values, character number between 1 and 25"
+            )
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"Error, invalid first name input {user.last_name}, please use only alphabetic values, character number between 1 and 25",
+            )
+
+    else:
+        logger.debug(
+            f"Error, invalid first name input {user.first_name}, please use only alphabetic values, character number between 1 and 25"
         )
-        session.add(new_student)
-        session.commit()
-        logger.info(
-            f"New student, {user.first_name} {user.last_name} is successfully added to our database"
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"Error, invalid first name input {user.first_name}, please use only alphabetic values, character number between 1 and 25",
         )
-        return {"Message": "You successfully created a new student"}
-    except Exception as e:
-        logger.debug(str(e))
-        return {"Message": "Error while creating a new entry for our database"}
-    finally:
-        session.close()
 
 
 # delete student
@@ -115,13 +167,18 @@ def delete_student_by_id(
         )
         session.delete(student)
         session.commit()
-        logger.info("Student removed successfully ")
-        return {"Message": "Student removed successfully "}
+        logger.info(f"Student with id {student_id} removed successfully ")
+        return {"Message": f"Student with id {student_id} removed successfully "}
+
     except Exception as e:
         logger.debug(
             f"Student with id {student_id} doesn't exist in our database, error {e}"
         )
-        return {"Error": f"Student with id {student_id} doesn't exist in our database"}
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Student with id {student_id} doesn't exist in our database",
+        )
+
     finally:
         session.close()
 
@@ -136,63 +193,97 @@ def update_student(student_id: int, user: UpdateStudent):
         .first()
     )
     if student != None:
-
         if user.first_name != None:
-            try:
-                student = (
-                    session.query(Student_Db_Model)
-                    .filter(Student_Db_Model.id == student_id)
-                    .first()
-                )
-                student.first_name = user.first_name
-                session.commit()
-            except:
-                session.rollback()
-                session.close()
+            if user.first_name.isalpha() and 1 <= len(user.first_name) <= 25:
+
+                try:
+                    student = (
+                        session.query(Student_Db_Model)
+                        .filter(Student_Db_Model.id == student_id)
+                        .first()
+                    )
+                    student.first_name = user.first_name
+                    session.commit()
+
+                except Exception as e:
+                    session.rollback()
+                    logger.debug(f"Error, {str(e)}")
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail=f"Error, {str(e)}",
+                    )
+                finally:
+                    session.close()
+
+            else:
                 logger.debug(
-                    "First name entry must be string type and it's lenght must be between 1 and 25 characters"
+                    f"Error, invalid first name input {user.first_name}, please use only alphabetic characters"
                 )
-                return {
-                    "Message": "First name entry must be string type and it's lenght must be between 1 and 25 characters"
-                }
+                raise HTTPException(
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    detail=f"Error, invalid first name input {user.first_name}, please use only alphabetic characters",
+                )
 
         if user.last_name != None:
-            try:
-                student = (
-                    session.query(Student_Db_Model)
-                    .filter(Student_Db_Model.id == student_id)
-                    .first()
-                )
-                student.last_name = user.last_name
-                session.commit()
-            except:
-                session.rollback()
-                session.close()
+            if user.last_name.isalpha() and 1 <= len(user.last_name) <= 25:
+
+                try:
+                    student = (
+                        session.query(Student_Db_Model)
+                        .filter(Student_Db_Model.id == student_id)
+                        .first()
+                    )
+                    student.last_name = user.last_name
+                    session.commit()
+
+                except Exception as e:
+                    session.rollback()
+                    logger.debug(f"Error, {str(e)}")
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail=f"Error, {str(e)}",
+                    )
+
+                finally:
+                    session.close()
+
+            else:
                 logger.debug(
-                    "Last name entry must be string type and it's lenght must be between 1 and 25 characters"
+                    f"Error, invalid last name input {user.last_name}, please use only alphabetic characters"
                 )
-                return {
-                    "Message": "Last name entry must be string type and it's lenght must be between 1 and 25 characters"
-                }
+                raise HTTPException(
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    detail=f"Error, invalid last name input {user.last_name}, please use only alphabetic characters",
+                )
 
         if user.email != None:
-            if "@" and "." in user.email:
-                student = (
-                    session.query(Student_Db_Model)
-                    .filter(Student_Db_Model.id == student_id)
-                    .first()
-                )
-                student.email = user.email
-                session.commit()
+            if re.fullmatch(reg_email_validation, user.email):
+                try:
+                    student = (
+                        session.query(Student_Db_Model)
+                        .filter(Student_Db_Model.id == student_id)
+                        .first()
+                    )
+                    student.email = user.email
+                    session.commit()
+
+                except Exception as e:
+                    session.rollback()
+                    logger.debug(f"Error, {str(e)}")
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail=f"Error, {str(e)}",
+                    )
+
+                finally:
+                    session.close()
+
             else:
-                session.rollback()
-                session.close()
-                logger.debug(
-                    "Invalid email format, characters @ or . missing from your entry"
+                logger.debug(f"Invalid email format ({user.email})")
+                raise HTTPException(
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    detail=f"Invalid email format ({user.email})",
                 )
-                return {
-                    "Message": "Invalid email format, characters @ or . missing from your entry"
-                }
 
         if user.gender != None:
             if "male" or "female" in user.gender:
@@ -203,21 +294,27 @@ def update_student(student_id: int, user: UpdateStudent):
                 )
                 student.gender = user.gender
                 session.commit()
+
             else:
                 logger.debug(
                     "Invalid entry, you can only insert two values (male or female)"
                 )
-                return {
-                    "Message": "Invalid entry, you can only insert two values (male or female)"
-                }
+                raise HTTPException(
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    detail=f"Invalid entry ({user.gender}), you can only insert two values (male or female)",
+                )
 
         session.close()
         logger.info(f"Student with id {student_id} data was successfully modified")
         return {
             "Message": f"Student with id {student_id} data was successfully modified"
         }
+
     else:
         session.rollback()
         session.close()
         logger.debug(f"Student with id {student_id} doesn't exist in our database")
-        return {"Error": f"Student with id {student_id} doesn't exist in our database"}
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Student with id {student_id} doesn't exist in our database",
+        )
