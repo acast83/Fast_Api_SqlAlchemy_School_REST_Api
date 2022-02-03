@@ -34,7 +34,7 @@ app = FastAPI()
 # root endpoint
 @app.get("/")
 def root():
-    return {"Welcome": "to our school API"}
+    return {"Message": "Welcome to our school API"}
 
 
 # fetch list of all students
@@ -52,6 +52,38 @@ def query_students():
     session.close()
     logger.info("List of all students is fetched from the database")
     return dict_students
+
+
+# fetch list of students with limit and offset
+@app.get("/api/students/{offset_val},{limit_val}")
+def query_students_with_limit_and_offset(
+    offset_val: int = Path(None, description="please enter offset value"),
+    limit_val: int = Path(None, description="Please enter limit value"),
+):
+    try:
+        students = (
+            session.query(Student_Db_Model).offset(offset_val).limit(limit_val).all()
+        )
+        dict_students = {}
+        for student in students:
+            dict_students[student.id] = {
+                "first name:": student.first_name,
+                "last name: ": student.last_name,
+                "email: ": student.email,
+                "gender: ": student.gender,
+            }
+        logger.info(
+            f"List of students is fetched from the database, offset is {offset_val}, limit is {limit_val}"
+        )
+        return dict_students
+    except Exception as e:
+        session.rollback()
+        logger.debug(f"Error, {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail=f"Error, {str(e)}"
+        )
+    finally:
+        session.close()
 
 
 # fetch list of students with specific name
